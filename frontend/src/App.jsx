@@ -33,6 +33,7 @@ function App() {
                   <Route path="/login" element={<Login />} />
                   <Route path="/citizen/dashboard" element={<CitizenDashboard />} />
                   <Route path="/dashboard" element={<Navigate to="/" replace />} />
+                  <Route path="*" element={<Home />} />
                 </Routes>
               </div>
             </div>
