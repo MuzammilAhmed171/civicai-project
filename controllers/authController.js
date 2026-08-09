@@ -101,15 +101,19 @@ const loginUser = async (req, res) => {
 
     const cleanIdentity = identity.trim();
     const formattedCnic = formatCnic(cleanIdentity);
+    const rawDigits = cleanIdentity.replace(/\D/g, '');
 
-    // Search by Email, Original CNIC string, or Hyphenated CNIC
-    const user = await User.findOne({
-      $or: [
-        { email: cleanIdentity.toLowerCase() },
-        { cnic: cleanIdentity },
-        { cnic: formattedCnic }
-      ]
-    });
+    const queryConditions = [
+      { email: cleanIdentity.toLowerCase() },
+      { cnic: cleanIdentity },
+      { cnic: formattedCnic }
+    ];
+
+    if (rawDigits.length === 13) {
+      queryConditions.push({ cnic: rawDigits });
+    }
+
+    const user = await User.findOne({ $or: queryConditions });
 
     if (user && (await user.matchPassword(password))) {
       res.json({
