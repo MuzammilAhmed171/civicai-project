@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Helper: Find registered user by CNIC or Email
+  // Helper: Strictly find registered user by CNIC or Email
   const findRegisteredUser = (identity) => {
     try {
       const existing = JSON.parse(localStorage.getItem('civicai_registered_users') || '[]');
@@ -91,7 +91,10 @@ export const AuthProvider = ({ children }) => {
       saveSession(authToken, userDataRes);
       return res.data;
     } catch (err) {
-      console.warn('Backend API offline, saving new user registration locally:', err?.message);
+      if (err.response?.data?.error) {
+        throw new Error(err.response.data.error);
+      }
+      console.warn('Backend API offline, registering user into persistent local database:', err?.message);
       const fallbackUser = {
         _id: 'citizen_' + Date.now(),
         name: userData.name,
@@ -119,9 +122,14 @@ export const AuthProvider = ({ children }) => {
       saveSession(authToken, userDataRes);
       return res.data;
     } catch (err) {
-      console.warn('Backend API offline, executing local user login lookup for:', identity);
+      // If server responded with actual auth failure message (e.g. invalid password)
+      if (err.response?.data?.error) {
+        throw new Error(err.response.data.error);
+      }
+
+      console.warn('Backend API offline, checking registered users database for:', identity);
       
-      // Look up locally registered user matching CNIC or Email
+      // STRICT LOOKUP: Only allow users that were ACTUALLY registered!
       const localMatched = findRegisteredUser(identity);
 
       if (localMatched) {
@@ -130,23 +138,8 @@ export const AuthProvider = ({ children }) => {
         return localMatched;
       }
 
-      // If logging in for the first time without prior local registration
-      if (password && password.length >= 4) {
-        const generatedUser = {
-          _id: 'citizen_' + Date.now(),
-          name: identity.includes('@') ? identity.split('@')[0].toUpperCase() : 'Registered Citizen',
-          cnic: identity.includes('-') ? identity : (identity.length === 13 ? `${identity.slice(0,5)}-${identity.slice(5,12)}-${identity.slice(12,13)}` : identity),
-          email: identity.includes('@') ? identity : `${identity}@citizen.civicai.gov`,
-          phone: '+92-300-1234567',
-          city: 'Karachi',
-          role: 'citizen'
-        };
-        const mockToken = 'demo_token_' + Date.now();
-        saveSession(mockToken, generatedUser);
-        return generatedUser;
-      }
-
-      throw new Error('Invalid CNIC or Password');
+      // STRICT REJECTION: Do NOT allow random unregistered data!
+      throw new Error('Invalid CNIC/Email or Password. No registered account found with these credentials. Please Register first.');
     }
   };
 
@@ -157,6 +150,9 @@ export const AuthProvider = ({ children }) => {
       saveSession(authToken, userDataRes);
       return res.data;
     } catch (err) {
+      if (err.response?.data?.error) {
+        throw new Error(err.response.data.error);
+      }
       console.warn('Backend API offline, executing Admin Session Fallback for:', username);
       if ((username === 'admin' || username === 'admin@civicai.gov') && password === 'admin123') {
         const fallbackAdmin = {
