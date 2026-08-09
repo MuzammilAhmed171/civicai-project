@@ -1,0 +1,50 @@
+[
+  {
+    "_id": "1786222053059",
+    "description": "Local test complaint saved to file",
+    "category": "Safety",
+    "priority": "High",
+    "location": "Block B",
+    "status": "Open",
+    "assignedDepartment": "Police Department",
+    "aiOutput": {
+      "category": "Safety",
+      "priority": "High",
+      "confidence": 0.64
+    },
+    "createdAt": "2026-08-08T20:47:33.059Z",
+    "updatedAt": "2026-08-08T20:47:33.059Z"
+  },
+  {
+    "_id": "1770583000001",
+    "description": "Pothole on main road causing traffic delays and accidents",
+    "category": "Road",
+    "priority": "Critical",
+    "location": "Main Highway, Block A",
+    "status": "Open",
+    "assignedDepartment": "PWD Department",
+    "aiOutput": {
+      "category": "Road",
+      "priority": "Critical",
+      "confidence": 0.85
+    },
+    "createdAt": "2026-08-08T10:00:00.000Z",
+    "updatedAt": "2026-08-08T10:00:00.000Z"
+  },
+  {
+    "_id": "1770583000002",
+    "description": "Water supply is contaminated and dirty",
+    "category": "Water",
+    "priority": "High",
+    "location": "Sector 4",
+    "status": "In Progress",
+    "assignedDepartment": "Water Supply Department",
+    "aiOutput": {
+      "category": "Water",
+      "priority": "High",
+      "confidence": 0.78
+    },
+    "createdAt": "2026-08-08T11:30:00.000Z",
+    "updatedAt": "2026-08-08T11:30:00.000Z"
+  }
+]

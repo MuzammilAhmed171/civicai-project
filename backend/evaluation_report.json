@@ -1,0 +1,160 @@
+{
+  "dataset": {
+    "total_samples": 130,
+    "train_samples": 104,
+    "test_samples": 26,
+    "categories": [
+      "Drainage",
+      "Electricity",
+      "Other",
+      "Road",
+      "Safety",
+      "Waste",
+      "Water"
+    ],
+    "priorities": [
+      "Critical",
+      "High",
+      "Low",
+      "Medium"
+    ],
+    "category_distribution": {
+      "Road": 20,
+      "Water": 20,
+      "Waste": 20,
+      "Electricity": 20,
+      "Drainage": 20,
+      "Safety": 20,
+      "Other": 10
+    },
+    "priority_distribution": {
+      "High": 42,
+      "Medium": 35,
+      "Critical": 33,
+      "Low": 20
+    }
+  },
+  "classification": {
+    "model": "LinearSVC",
+    "accuracy": 0.7692,
+    "precision": 0.8187,
+    "recall": 0.7692,
+    "f1_score": 0.7503,
+    "confusion_matrix": [
+      [
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        3,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        3,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        1,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4
+      ]
+    ],
+    "labels": [
+      "Drainage",
+      "Electricity",
+      "Other",
+      "Road",
+      "Safety",
+      "Waste",
+      "Water"
+    ],
+    "detailed_report": "Classification Model (LinearSVC):\n- Best performing model for category prediction\n- Uses TF-IDF with unigrams and bigrams\n- Handles 7 categories: Road, Water, Waste, Electricity, Drainage, Safety, Other\n- Strong performance on Drainage, Waste, Water categories\n- Some confusion between Electricity and Road, Safety and Waste"
+  },
+  "priority": {
+    "model": "LogisticRegression (with keyword features)",
+    "accuracy": 0.3846,
+    "precision": 0.3293,
+    "recall": 0.3846,
+    "f1_score": 0.3404,
+    "confusion_matrix": [
+      [
+        2,
+        5,
+        0,
+        0
+      ],
+      [
+        0,
+        6,
+        0,
+        2
+      ],
+      [
+        1,
+        2,
+        0,
+        1
+      ],
+      [
+        3,
+        1,
+        1,
+        2
+      ]
+    ],
+    "labels": [
+      "Critical",
+      "High",
+      "Low",
+      "Medium"
+    ],
+    "note": "Priority prediction is inherently subjective. Keyword-based features added to improve accuracy.",
+    "detailed_report": "Priority Model (LogisticRegression + Keywords):\n- Uses TF-IDF + keyword-based urgency features\n- 4 priority levels: Critical, High, Medium, Low\n- Keyword fallback rules boost Critical detection\n- Main challenge: priority is subjective and context-dependent\n- More training data needed for significant improvement"
+  }
+}

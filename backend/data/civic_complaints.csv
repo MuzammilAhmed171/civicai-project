@@ -1,0 +1,131 @@
+complaint,category,priority
+There is a large pothole on the main road causing accidents,Road,Critical
+Street light is not working near my house,Road,Medium
+Road is completely broken and vehicles cannot pass,Road,Critical
+Speed breaker is needed near the school,Road,Low
+Road markings have faded and need repainting,Road,Low
+A tree has fallen and is blocking the road,Road,High
+The footpath is broken and dangerous for pedestrians,Road,Medium
+Road construction is incomplete for weeks,Road,High
+Manhole cover is missing on the road,Road,Critical
+Road is flooded after light rain,Road,Medium
+Illegal parking is blocking the road,Road,Medium
+Road needs resurfacing urgently,Road,High
+Street name board is missing,Road,Low
+Road divider is damaged,Road,Medium
+Heavy vehicles are damaging the road,Road,High
+Road near market is full of cracks,Road,Medium
+Traffic signal is not working,Road,High
+Road sign boards are damaged,Road,Low
+Main highway has deep potholes,Road,Critical
+Road widening work is pending,Road,Medium
+No water supply for the last 3 days,Water,Critical
+Water pipe is leaking and water is being wasted,Water,High
+Water quality is very poor and smells bad,Water,High
+Low water pressure in our area,Water,Medium
+Water tanker is not coming regularly,Water,Medium
+Main water pipeline has burst,Water,Critical
+Water meter is showing incorrect readings,Water,Low
+Contaminated water is causing health issues,Water,Critical
+Water connection was disconnected without notice,Water,High
+Borewell water is drying up,Water,High
+Water bill is too high despite low usage,Water,Low
+Water supply timing is very irregular,Water,Medium
+Sewage water is mixing with drinking water,Water,Critical
+Water pump is not working in our building,Water,High
+Need new water connection for new house,Water,Low
+Water tank is overflowing,Water,Medium
+Water pressure is too low on upper floors,Water,Medium
+Water is brown and muddy,Water,High
+No water in the colony for 2 weeks,Water,Critical
+Water pipe burst near school,Water,Critical
+Garbage is overflowing from the dustbin,Waste,High
+Garbage collection vehicle is not coming,Waste,High
+Illegal dumping of construction waste,Waste,Medium
+Dead animal is lying on the street,Waste,Critical
+Garbage burning is causing air pollution,Waste,High
+Waste segregation is not being followed,Waste,Medium
+Public toilet is very dirty,Waste,High
+No dustbin installed in our area,Waste,Medium
+Medical waste is being dumped openly,Waste,Critical
+Garbage smell is unbearable,Waste,High
+Need more garbage bins in the market area,Waste,Medium
+Sweeper is not coming daily,Waste,Medium
+Plastic waste is clogging the drains,Waste,High
+Composting facility is needed,Waste,Low
+Waste collection timing needs to change,Waste,Low
+Garbage heap near temple is growing,Waste,High
+Drainage is filled with garbage,Waste,High
+Street dogs are spreading garbage,Waste,Medium
+Industrial waste is dumped in river,Waste,Critical
+Recycling bins are not available,Waste,Low
+Power outage for the entire area since morning,Electricity,Critical
+Street light is flickering,Electricity,Medium
+Electricity bill is extremely high,Electricity,Medium
+Transformer is making loud noise,Electricity,High
+Electric pole is leaning dangerously,Electricity,Critical
+Frequent power cuts in our locality,Electricity,High
+New electricity connection is needed,Electricity,Low
+Electric wire is hanging low and is dangerous,Electricity,Critical
+Meter reading is incorrect,Electricity,Medium
+Voltage fluctuation is damaging appliances,Electricity,High
+Electricity theft is happening in our area,Electricity,High
+Street lights are on during daytime,Electricity,Low
+Underground cable is damaged,Electricity,Critical
+Need street lights in dark areas,Electricity,Medium
+Electricity department office is unresponsive,Electricity,Low
+Power cut during surgery at hospital,Electricity,Critical
+Electric pole fell on road,Electricity,Critical
+No electricity in slum area for weeks,Electricity,Critical
+Generator noise is too loud,Electricity,Low
+Need solar street lights,Electricity,Low
+Drain is completely blocked and overflowing,Drainage,Critical
+Sewage water is entering our house,Drainage,Critical
+Drainage line needs cleaning,Drainage,High
+Storm water drain is clogged with plastic,Drainage,High
+Drainage cover is broken,Drainage,Medium
+Foul smell coming from drainage,Drainage,High
+Drainage water is backing up into streets,Drainage,Critical
+New drainage line needed in our colony,Drainage,Medium
+Drainage pipe is leaking,Drainage,High
+Mosquito breeding in stagnant drainage water,Drainage,High
+Drainage construction is incomplete,Drainage,Medium
+Manhole is overflowing with sewage,Drainage,Critical
+Drainage system is very old and damaged,Drainage,High
+Need better drainage in low lying area,Drainage,Medium
+Drainage map is not available for our area,Drainage,Low
+Sewage line burst near school,Drainage,Critical
+Drain water mixed with drinking water,Drainage,Critical
+Drainage chamber is broken,Drainage,Medium
+Rain water drain is blocked,Drainage,High
+Drainage cleaning schedule is irregular,Drainage,Medium
+Street fight is happening right now,Safety,Critical
+Suspicious person is roaming in our area,Safety,High
+Chain snatching incident occurred yesterday,Safety,Critical
+No police patrolling in our area,Safety,Medium
+CCTV cameras are not working,Safety,High
+Drug peddling is happening near school,Safety,Critical
+Street lights are off making area unsafe,Safety,High
+Need police booth in our area,Safety,Medium
+Domestic violence incident reported,Safety,Critical
+Fire broke out in the building,Safety,Critical
+Illegal construction is unsafe,Safety,High
+Stray dogs are attacking people,Safety,High
+Women safety is a major concern here,Safety,High
+Speeding vehicles near school zone,Safety,High
+Need emergency helpline number displayed,Safety,Low
+Robbery happened last night,Safety,Critical
+Gang activity reported in park,Safety,Critical
+Anti-social elements gathering daily,Safety,High
+No security guard in apartment,Safety,Medium
+Children safety at risk near open drain,Safety,High
+Park benches are broken,Other,Low
+Community center needs renovation,Other,Medium
+Public library books are outdated,Other,Low
+Hospital is overcrowded,Other,High
+School building needs repair,Other,Medium
+Playground equipment is damaged,Other,Medium
+Public transport is irregular,Other,Medium
+Noise pollution from factory,Other,High
+Air pollution from vehicles,Other,High
+Need more public parks,Other,Low

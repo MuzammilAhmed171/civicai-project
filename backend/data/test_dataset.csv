@@ -1,0 +1,16 @@
+complaint,expected_category,expected_priority
+There is no water supply in our area since yesterday,Water,Critical
+Street light near the park is broken,Electricity,Medium
+Garbage truck has not come for a week,Waste,High
+Main road has deep potholes after rain,Road,High
+Sewage water is backing up into my house,Drainage,Critical
+Suspicious people are loitering near school,Safety,High
+Public toilet needs cleaning,Waste,Medium
+Transformer caught fire last night,Electricity,Critical
+Speeding bikes in residential area,Safety,High
+Community hall roof is leaking,Other,Medium
+Water meter reading seems wrong,Water,Low
+Need new speed breaker near hospital,Road,Medium
+Plastic bags clogging the drain,Drainage,High
+Park swing is broken,Other,Low
+Street dogs attacking children in park,Safety,Critical
