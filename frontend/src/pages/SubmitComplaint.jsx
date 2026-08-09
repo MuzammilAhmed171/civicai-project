@@ -120,7 +120,9 @@ const SubmitComplaint = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.description.trim() || !formData.addressLine1.trim()) {
-      setError('Please provide a detailed description and specific Address Line 1.');
+      const msg = 'Please provide a detailed description and specific Address Line 1.';
+      setError(msg);
+      toast.warning(msg);
       return;
     }
 
@@ -142,9 +144,12 @@ const SubmitComplaint = () => {
       });
 
       setSubmitted(true);
+      toast.success('Grievance & Photo evidence submitted to Municipal Database!');
     } catch (err) {
       console.error('Submission error:', err);
-      setError(err.response?.data?.error || err.message || 'Failed to submit complaint.');
+      const msg = err.response?.data?.error || err.message || 'Failed to submit complaint.';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setSubmitting(false);
     }

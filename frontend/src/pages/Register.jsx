@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { User, CreditCard, Mail, Phone, MapPin, Lock, ArrowRight, ShieldCheck, AlertCircle, Eye, EyeOff } from 'lucide-react';
 
 const Register = () => {
   const navigate = useNavigate();
   const { register } = useAuth();
+  const { toast } = useToast();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -36,23 +38,31 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.cnic || !formData.email || !formData.phone || !formData.password) {
-      setError('Please fill all required fields');
+      const msg = 'Please fill all required fields';
+      setError(msg);
+      toast.warning(msg);
       return;
     }
 
     if (formData.cnic.length !== 15) {
-      setError('Please enter a valid 13-digit CNIC format (12345-6789012-3)');
+      const msg = 'Please enter a valid 13-digit CNIC format (12345-6789012-3)';
+      setError(msg);
+      toast.warning(msg);
       return;
     }
 
     const phoneRegex = /^(\+92|0|92)?-?3\d{2}-?\d{7}$/;
     if (!phoneRegex.test(formData.phone.replace(/\s/g, ''))) {
-      setError('Please enter a valid Pakistani phone number (e.g. 0300-1234567 or +92-300-1234567)');
+      const msg = 'Please enter a valid Pakistani phone number (e.g. 0300-1234567)';
+      setError(msg);
+      toast.warning(msg);
       return;
     }
 
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
+      const msg = 'Password must be at least 6 characters long';
+      setError(msg);
+      toast.warning(msg);
       return;
     }
 
@@ -61,9 +71,12 @@ const Register = () => {
 
     try {
       await register(formData);
+      toast.success(`Account registered successfully! Welcome ${formData.name}.`);
       navigate('/citizen/dashboard');
     } catch (err) {
-      setError(err.response?.data?.error || 'Registration failed. Please check your details.');
+      const msg = err.response?.data?.error || err.message || 'Registration failed. Please check your details.';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { UserCheck, Lock, ArrowRight, AlertCircle, Eye, EyeOff, ShieldCheck, KeyRound, User } from 'lucide-react';
 import Logo from '../components/Logo';
 
 const Login = () => {
   const navigate = useNavigate();
   const { login, adminLogin } = useAuth();
+  const { toast } = useToast();
 
   const [activeTab, setActiveTab] = useState('citizen'); // 'citizen' | 'admin'
 
@@ -26,6 +28,7 @@ const Login = () => {
     e.preventDefault();
     if (!identity || !password) {
       setError('Please enter your CNIC / Email and Password');
+      toast.warning('Please enter CNIC/Email and Password.');
       return;
     }
 
@@ -33,10 +36,13 @@ const Login = () => {
     setError('');
 
     try {
-      await login(identity, password);
+      const res = await login(identity, password);
+      toast.success(`Welcome back, ${res?.name || 'Citizen'}! Authenticated successfully.`);
       navigate('/citizen/dashboard');
     } catch (err) {
-      setError(err.response?.data?.error || 'Invalid CNIC/Email or Password');
+      const msg = err.response?.data?.error || err.message || 'Invalid CNIC/Email or Password';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -46,6 +52,7 @@ const Login = () => {
     e.preventDefault();
     if (!adminUsername || !adminPassword) {
       setError('Please enter admin email and password');
+      toast.warning('Please enter admin credentials.');
       return;
     }
 
@@ -54,9 +61,12 @@ const Login = () => {
 
     try {
       await adminLogin(adminUsername, adminPassword);
+      toast.success('Admin Portal Unlocked! Welcome Chief Inspector.');
       navigate('/admin');
     } catch (err) {
-      setError(err.response?.data?.error || 'Invalid Municipal Admin Credentials');
+      const msg = err.response?.data?.error || err.message || 'Invalid Municipal Admin Credentials';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

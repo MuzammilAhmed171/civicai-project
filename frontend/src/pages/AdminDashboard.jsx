@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '../api/axios';
+import GlobalLoader from '../components/Loader';
+import { useToast } from '../context/ToastContext';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend
@@ -13,6 +15,7 @@ import StatsCard from '../components/StatsCard';
 const AdminDashboard = () => {
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     fetchAnalytics();
@@ -24,6 +27,7 @@ const AdminDashboard = () => {
       if (res.data) setAnalytics(res.data);
     } catch (err) {
       console.error('Failed to fetch analytics:', err);
+      toast.error('Failed to load live analytics data.');
     } finally {
       setLoading(false);
     }
@@ -33,12 +37,7 @@ const AdminDashboard = () => {
   const PRIORITY_COLORS = { Critical: '#dc2626', High: '#ea580c', Medium: '#d97706', Low: '#16a34a' };
 
   if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-32 space-y-3 bg-white border border-slate-300">
-        <Loader2 size={36} className="animate-spin text-[#064e3b]" />
-        <p className="text-xs text-slate-600 font-bold uppercase tracking-wider">Loading Municipal Authority Dashboard...</p>
-      </div>
-    );
+    return <GlobalLoader message="Loading Municipal Executive Analytics..." />;
   }
 
   const summary = analytics || {};

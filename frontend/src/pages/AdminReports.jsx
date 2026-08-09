@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import api from '../api/axios';
+import { SkeletonTable } from '../components/Loader';
+import { useToast } from '../context/ToastContext';
 import { Download, Printer, FileText, Filter, Calendar, MapPin, Building2, CheckCircle2, Loader2 } from 'lucide-react';
 
 const AdminReports = () => {
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
   const [filters, setFilters] = useState({
     city: '',
     category: '',
@@ -22,6 +25,7 @@ const AdminReports = () => {
       setComplaints(Array.isArray(res.data) ? res.data : (res.data.complaints || []));
     } catch (e) {
       console.error('Failed to fetch complaints for reports:', e);
+      toast.error('Failed to fetch report records.');
     } finally {
       setLoading(false);
     }
@@ -40,7 +44,10 @@ const AdminReports = () => {
 
   // Export CSV Handler
   const exportToCSV = () => {
-    if (filtered.length === 0) return;
+    if (filtered.length === 0) {
+      toast.warning('No records to export.');
+      return;
+    }
 
     const headers = ['Grievance ID,Citizen Name,CNIC,Phone,Province,City,Address,Category,Priority,Status,Assigned Department,Date,Officer Remarks'];
     const rows = filtered.map(c => {
@@ -69,6 +76,7 @@ const AdminReports = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    toast.success(`Exported ${filtered.length} records to CSV!`);
   };
 
   // Print Summary Handler
@@ -158,9 +166,7 @@ const AdminReports = () => {
       {/* Reports Data Table */}
       <div className="bg-white border-2 border-slate-300 overflow-hidden">
         {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 size={36} className="animate-spin text-[#064e3b]" />
-          </div>
+          <SkeletonTable rows={5} />
         ) : filtered.length === 0 ? (
           <div className="p-10 text-center text-xs font-semibold text-slate-600">
             No grievance records found matching selected report filter criteria.

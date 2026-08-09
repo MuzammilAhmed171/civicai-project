@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '../api/axios';
+import { useToast } from '../context/ToastContext';
+import { SkeletonTable } from '../components/Loader';
 import {
   Search,
   Filter,
@@ -24,6 +26,7 @@ const AdminComplaints = () => {
   const [selectedComplaint, setSelectedComplaint] = useState(null);
   const [updatingId, setUpdatingId] = useState(null);
   const [resolutionInput, setResolutionInput] = useState('');
+  const { toast } = useToast();
   const [filters, setFilters] = useState({
     search: '',
     city: '',
@@ -43,6 +46,7 @@ const AdminComplaints = () => {
       setComplaints(Array.isArray(res.data) ? res.data : (res.data.complaints || []));
     } catch (err) {
       console.error('Failed to fetch complaints:', err);
+      toast.error('Failed to load complaints from database.');
     } finally {
       setLoading(false);
     }
@@ -56,8 +60,9 @@ const AdminComplaints = () => {
       if (selectedComplaint && String(selectedComplaint._id) === String(id)) {
         setSelectedComplaint(prev => ({ ...prev, status: newStatus }));
       }
+      toast.success(`Complaint status updated to "${newStatus}".`);
     } catch (err) {
-      console.error('Failed to update status:', err);
+      toast.error('Failed to update complaint status.');
     } finally {
       setUpdatingId(null);
     }
@@ -71,8 +76,9 @@ const AdminComplaints = () => {
       if (selectedComplaint && String(selectedComplaint._id) === String(id)) {
         setSelectedComplaint(prev => ({ ...prev, assignedDepartment: newDept }));
       }
+      toast.success(`Assigned to ${newDept}`);
     } catch (err) {
-      console.error('Failed to assign department:', err);
+      toast.error('Failed to reassign department.');
     } finally {
       setUpdatingId(null);
     }
@@ -87,8 +93,9 @@ const AdminComplaints = () => {
       if (selectedComplaint && String(selectedComplaint._id) === String(id)) {
         setSelectedComplaint(prev => ({ ...prev, resolutionNotes: resolutionInput }));
       }
+      toast.success('Inspection remarks saved & updated.');
     } catch (err) {
-      console.error('Failed to save resolution notes:', err);
+      toast.error('Failed to save remarks.');
     } finally {
       setUpdatingId(null);
     }
@@ -231,9 +238,7 @@ const AdminComplaints = () => {
       {/* Table */}
       <div className="bg-white border-2 border-slate-300 overflow-hidden">
         {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 size={36} className="animate-spin text-[#064e3b]" />
-          </div>
+          <SkeletonTable rows={6} />
         ) : filtered.length === 0 ? (
           <div className="p-12 text-center">
             <AlertCircle size={36} className="text-slate-400 mx-auto mb-2" />

@@ -11,11 +11,11 @@ import {
   CheckCircle2,
   AlertCircle,
   Building2,
-  Loader2,
   FileText,
   MessageSquare,
   Image as ImageIcon
 } from 'lucide-react';
+import { SkeletonGrid } from '../components/Loader';
 
 const CitizenDashboard = () => {
   const { user } = useAuth();
@@ -146,9 +146,7 @@ const CitizenDashboard = () => {
           </div>
 
           {loading ? (
-            <div className="flex items-center justify-center py-20 bg-white border border-slate-300">
-              <Loader2 size={36} className="animate-spin text-[#064e3b]" />
-            </div>
+            <SkeletonGrid count={2} />
           ) : complaints.length === 0 ? (
             <div className="bg-white p-10 text-center border border-slate-300 space-y-3">
               <div className="w-12 h-12 bg-slate-100 text-slate-500 flex items-center justify-center mx-auto border border-slate-300">

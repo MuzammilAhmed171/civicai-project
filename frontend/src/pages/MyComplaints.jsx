@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import api from '../api/axios';
 import { Search, Loader2, AlertCircle, MapPin, Calendar, Tag } from 'lucide-react';
 
+import { SkeletonGrid } from '../components/Loader';
+
 const MyComplaints = () => {
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -70,7 +72,7 @@ const MyComplaints = () => {
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center py-20"><Loader2 size={32} className="animate-spin text-primary" /></div>
+        <SkeletonGrid count={3} />
       ) : filtered.length === 0 ? (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
           <AlertCircle size={48} className="text-gray-300 mx-auto mb-4" />

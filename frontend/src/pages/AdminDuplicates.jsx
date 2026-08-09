@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../api/axios';
+import { SkeletonGrid } from '../components/Loader';
 import { CopyCheck, Loader2, AlertCircle, MapPin, Building2, Eye, CheckCircle2, User, CreditCard } from 'lucide-react';
 
 const AdminDuplicates = () => {
@@ -39,9 +40,7 @@ const AdminDuplicates = () => {
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center py-20 bg-white border border-slate-300">
-          <Loader2 size={36} className="animate-spin text-[#064e3b]" />
-        </div>
+        <SkeletonGrid count={2} />
       ) : duplicates.length === 0 ? (
         <div className="bg-white p-12 text-center border-2 border-slate-300 space-y-3">
           <div className="w-12 h-12 bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto border border-emerald-400">
