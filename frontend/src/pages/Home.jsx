@@ -124,8 +124,9 @@ const Home = () => {
             <div className="grid grid-cols-12 gap-2">
               <div className="col-span-7 h-28 border-2 border-emerald-400 overflow-hidden relative group bg-slate-900">
                 <img
-                  src="/images/pakistan_road_repair.png"
+                  src="./images/pakistan_road_repair.png"
                   alt="PWD Road Construction"
+                  onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1541888946425-d0fbb186c572?w=800&auto=format&fit=crop'; }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-[#00401a]/95 text-[10px] font-mono font-bold text-white px-2 py-0.5 border-t border-emerald-400">
@@ -135,8 +136,9 @@ const Home = () => {
 
               <div className="col-span-5 h-28 border-2 border-emerald-400 overflow-hidden relative group bg-slate-900">
                 <img
-                  src="/images/pakistan_water_pipeline.png"
+                  src="./images/pakistan_water_pipeline.png"
                   alt="Water Board Pipeline"
+                  onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1574482620826-40685ca5ebd2?w=800&auto=format&fit=crop'; }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-[#00401a]/95 text-[10px] font-mono font-bold text-white px-2 py-0.5 border-t border-emerald-400">
@@ -149,8 +151,9 @@ const Home = () => {
             <div className="grid grid-cols-12 gap-2">
               <div className="col-span-6 h-32 border-2 border-emerald-400 overflow-hidden relative group bg-slate-900">
                 <img
-                  src="/images/pakistan_waste_cleanup.png"
+                  src="./images/pakistan_waste_cleanup.png"
                   alt="Solid Waste Sanitation"
+                  onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=800&auto=format&fit=crop'; }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-[#00401a]/95 text-[10px] font-mono font-bold text-white px-2 py-0.5 border-t border-emerald-400">
@@ -160,8 +163,9 @@ const Home = () => {
 
               <div className="col-span-6 h-32 border-2 border-emerald-400 overflow-hidden relative group bg-slate-900">
                 <img
-                  src="/images/pakistan_street_lighting.png"
+                  src="./images/pakistan_street_lighting.png"
                   alt="Street Lighting Repair"
+                  onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&auto=format&fit=crop'; }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-[#00401a]/95 text-[10px] font-mono font-bold text-white px-2 py-0.5 border-t border-emerald-400">
@@ -173,8 +177,9 @@ const Home = () => {
             {/* Lower Row: Wide Spanning Image Box */}
             <div className="w-full h-28 border-2 border-emerald-400 overflow-hidden relative group bg-slate-900">
               <img
-                src="/images/pakistan_drainage_cleaning.png"
+                src="./images/pakistan_drainage_cleaning.png"
                 alt="Drainage Channel Cleaning"
+                onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop'; }}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-[#00401a]/95 text-[10px] font-mono font-bold text-white px-2.5 py-1 border-t border-emerald-400 flex justify-between items-center">

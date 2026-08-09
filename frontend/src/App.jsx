@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
@@ -6,7 +7,6 @@ import SubmitComplaint from './pages/SubmitComplaint';
 import MyComplaints from './pages/MyComplaints';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import AdminLogin from './pages/AdminLogin';
 import CitizenDashboard from './pages/CitizenDashboard';
 import AdminLayout from './components/AdminLayout';
 import AdminDashboard from './pages/AdminDashboard';
@@ -15,6 +15,13 @@ import AdminDuplicates from './pages/AdminDuplicates';
 import AdminReports from './pages/AdminReports';
 
 function App() {
+  useEffect(() => {
+    // Automatically enforce home hash routing if landed without hash
+    if (!window.location.hash || window.location.hash === '#' || window.location.hash === '#') {
+      window.location.hash = '#/';
+    }
+  }, []);
+
   return (
     <AuthProvider>
       <Routes>
@@ -26,6 +33,7 @@ function App() {
               <Navbar />
               <div className="flex-1">
                 <Routes>
+                  <Route path="" element={<Home />} />
                   <Route path="/" element={<Home />} />
                   <Route path="/submit" element={<SubmitComplaint />} />
                   <Route path="/complaints" element={<MyComplaints />} />
