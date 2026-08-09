@@ -1,82 +1,123 @@
-# 🚀 CivicAI — Smart Civic Complaint System
+# 🚀 CivicAI — Stage 2: AI Model Development
 
-MERN Stack + AI powered civic complaint platform.
+Complete AI pipeline for Smart Civic Complaint System.
 
-## 📁 Project Structure
+## 📁 Stage 2 Output
 
 ```
-civicai-project/
-├── backend/          # Node.js + Express API
-│   ├── ai/           # Python AI models (scikit-learn)
-│   ├── config/       # DB config
-│   ├── controllers/  # Route controllers
-│   ├── models/       # Mongoose models
-│   └── routes/       # API routes
-└── frontend/         # React + Tailwind + Vite
-    └── src/
-        ├── components/
-        └── pages/
+civicai-stage2/
+├── data/
+│   ├── civic_complaints.csv      # Final dataset (130 samples)
+│   ├── X_train.csv               # Training features
+│   ├── X_test.csv                # Testing features
+│   ├── y_cat_train.csv           # Training categories
+│   ├── y_cat_test.csv            # Testing categories
+│   ├── y_pri_train.csv           # Training priorities
+│   ├── y_pri_test.csv            # Testing priorities
+│   └── test_dataset.csv          # Unseen test cases (15 samples)
+├── models/
+│   ├── complaint_classifier.pkl  # Trained category model
+│   ├── priority_model.pkl        # Trained priority model
+│   ├── tfidf_vectorizer.pkl      # Text vectorizer
+│   └── priority_features.pkl     # Keyword feature config
+├── tests/
+│   └── test_ai.py                # AI testing script
+├── ai_service.py                 # Unified AI service
+├── evaluation_report.json        # Model evaluation metrics
+├── AI_LIMITATIONS.md             # Known limitations
+├── requirements.txt              # Python dependencies
+└── README.md                     # This file
 ```
 
-## 🛠️ Tech Stack
+## 🛠️ Setup
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React + Tailwind CSS + Vite |
-| Backend | Node.js + Express |
-| Database | MongoDB (Mongoose) |
-| AI | Python + scikit-learn |
-| Charts | Recharts |
-
-## 🚀 Quick Start
-
-### 1. Start MongoDB
-Make sure MongoDB is running locally or use MongoDB Atlas.
-
-### 2. Setup Backend
 ```bash
-cd backend
-npm install
-
-# Train AI models (requires Python + scikit-learn)
-cd ai
 pip install -r requirements.txt
-python train_model.py
-cd ..
-
-# Start server
-npm run dev
 ```
-Backend runs on `http://localhost:5000`
 
-### 3. Setup Frontend
+## 🤖 AI Service Usage
+
+```python
+from ai_service import analyze_complaint
+
+result = analyze_complaint("Street light is not working near my house")
+print(result)
+# Output: {"category": "Electricity", "priority": "Medium", "confidence": 0.82}
+```
+
+### Individual Functions
+
+```python
+from ai_service import classify_complaint, predict_priority
+
+# Category only
+cat = classify_complaint("Garbage is overflowing")
+# {"category": "Waste", "confidence": 0.91}
+
+# Priority only
+pri = predict_priority("Main road par accident ho gaya hai")
+# {"priority": "Critical", "confidence": 0.75}
+```
+
+## 🧪 Run Tests
+
 ```bash
-cd frontend
-npm install
-npm run dev
+python tests/test_ai.py
 ```
-Frontend runs on `http://localhost:5173`
 
-## 📡 API Endpoints
+Tests 15 unseen complaints and shows accuracy.
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/complaints | Get all complaints |
-| POST | /api/complaints | Submit new complaint |
-| GET | /api/complaints/:id | Get complaint by ID |
-| PUT | /api/complaints/:id | Update complaint |
-| DELETE | /api/complaints/:id | Delete complaint |
-| GET | /api/analytics | Get dashboard analytics |
-| POST | /api/ai/analyze | AI analyze complaint text |
+## 📊 Evaluation Results
 
-## 🤖 AI Features
+### Complaint Classification
+| Metric | Value |
+|--------|-------|
+| Model | LinearSVC |
+| Accuracy | 76.9% |
+| Precision | 81.9% |
+| Recall | 76.9% |
+| F1 Score | 75.0% |
 
-- **Complaint Classification** → Road, Water, Waste, Electricity, Drainage, Safety, Other
-- **Priority Prediction** → Low, Medium, High, Critical
+### Priority Prediction
+| Metric | Value |
+|--------|-------|
+| Model | LogisticRegression + Keywords |
+| Accuracy | 38.5% |
+| Precision | 32.9% |
+| Recall | 38.5% |
+| F1 Score | 34.0% |
 
-## 👥 Pages
+> ⚠️ Priority prediction is inherently subjective. Same text can have different priorities based on context. More data needed for improvement.
 
-- **Home** — Landing page
-- **Submit Complaint** — Form with AI analysis
-- **My Complaints** — List with search & filters
-- **Admin Dashboard** — Analytics & charts
+## 📋 Dataset Details
+
+- **Total Samples**: 130
+- **Train/Test Split**: 80/20 (104 train / 26 test)
+- **Categories**: Road, Water, Waste, Electricity, Drainage, Safety, Other
+- **Priorities**: Critical, High, Medium, Low
+- **Stratified Split**: Maintains category distribution
+
+## 🔮 Next Stage
+
+**Stage 3**: FastAPI Backend Integration
+
+```
+React Frontend
+    ↓
+FastAPI Backend
+    ↓
+AI Service (this module)
+    ↓
+Database
+```
+
+## ⚠️ Known Limitations
+
+See [AI_LIMITATIONS.md](AI_LIMITATIONS.md) for detailed analysis.
+
+Key points:
+- Small dataset (130 samples)
+- Priority is subjective
+- English only
+- Ambiguous/multi-issue complaints may confuse model
+- Confidence < 50% → human review recommended
