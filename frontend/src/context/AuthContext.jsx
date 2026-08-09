@@ -94,19 +94,7 @@ export const AuthProvider = ({ children }) => {
       if (err.response?.data?.error) {
         throw new Error(err.response.data.error);
       }
-      console.warn('Backend API offline, registering user into persistent local database:', err?.message);
-      const fallbackUser = {
-        _id: 'citizen_' + Date.now(),
-        name: userData.name,
-        cnic: userData.cnic,
-        email: userData.email,
-        phone: userData.phone,
-        city: userData.city,
-        role: 'citizen'
-      };
-      const mockToken = 'demo_token_' + Date.now();
-      saveSession(mockToken, fallbackUser);
-      return fallbackUser;
+      throw new Error(err.message || 'Registration failed. Please check server connection.');
     }
   };
 

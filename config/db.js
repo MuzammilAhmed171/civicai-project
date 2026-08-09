@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
-  const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/civicai';
+  const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://civic:civic123@cluster0.9ngdzyh.mongodb.net/civicai';
   const maxRetries = 5;
   let attempts = 0;
 

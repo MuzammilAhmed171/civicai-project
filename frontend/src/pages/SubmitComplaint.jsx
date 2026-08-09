@@ -130,42 +130,21 @@ const SubmitComplaint = () => {
     try {
       const fullLocation = `${formData.addressLine1}${formData.addressLine2 ? ', ' + formData.addressLine2 : ''}, ${formData.city}, ${formData.province}`;
 
-      try {
-        await api.post('/complaints', {
-          province: formData.province,
-          city: formData.city,
-          addressLine1: formData.addressLine1,
-          addressLine2: formData.addressLine2,
-          location: fullLocation,
-          description: formData.description,
-          category: formData.category,
-          imageUrl: imagePreview
-        });
-      } catch (apiErr) {
-        console.warn('Backend API offline, saving complaint in local session:', apiErr?.message);
-        const existingLocal = JSON.parse(localStorage.getItem('civicai_local_complaints') || '[]');
-        const newComplaint = {
-          _id: 'local_cmp_' + Date.now(),
-          province: formData.province,
-          city: formData.city,
-          addressLine1: formData.addressLine1,
-          addressLine2: formData.addressLine2,
-          location: fullLocation,
-          description: formData.description,
-          category: formData.category,
-          imageUrl: imagePreview,
-          status: 'Submitted',
-          priority: 'High',
-          createdAt: new Date().toISOString()
-        };
-        existingLocal.unshift(newComplaint);
-        localStorage.setItem('civicai_local_complaints', JSON.stringify(existingLocal));
-      }
+      await api.post('/complaints', {
+        province: formData.province,
+        city: formData.city,
+        addressLine1: formData.addressLine1,
+        addressLine2: formData.addressLine2,
+        location: fullLocation,
+        description: formData.description,
+        category: formData.category,
+        imageUrl: imagePreview
+      });
 
       setSubmitted(true);
     } catch (err) {
       console.error('Submission error:', err);
-      setError(err.response?.data?.error || 'Failed to submit complaint. Please check server connection.');
+      setError(err.response?.data?.error || err.message || 'Failed to submit complaint.');
     } finally {
       setSubmitting(false);
     }
