@@ -14,6 +14,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminComplaints from './pages/AdminComplaints';
 import AdminDuplicates from './pages/AdminDuplicates';
 import AdminReports from './pages/AdminReports';
+import AdminAnalytics from './pages/AdminAnalytics';
 
 function App() {
   useEffect(() => {
@@ -60,7 +61,7 @@ function App() {
             <Route path="complaints" element={<AdminComplaints />} />
             <Route path="duplicates" element={<AdminDuplicates />} />
             <Route path="reports" element={<AdminReports />} />
-            <Route path="analytics" element={<AdminDashboard />} />
+            <Route path="analytics" element={<AdminAnalytics />} />
           </Route>
         </Routes>
       </AuthProvider>

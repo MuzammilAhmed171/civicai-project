@@ -1,10 +1,10 @@
-const Logo = ({ size = 'md', light = false }) => {
+const Logo = ({ size = 'md', light = false, iconOnly = false }) => {
   const dims = size === 'sm' ? 'w-8 h-8' : size === 'lg' ? 'w-12 h-12' : 'w-10 h-10';
 
   return (
     <div className="flex items-center gap-3 select-none">
       {/* Official Pakistani Municipal Crest Emblem SVG */}
-      <div className={`${dims} bg-[#064e3b] text-white p-1.5 flex items-center justify-center border-2 border-emerald-400 shadow-sm shrink-0`}>
+      <div className={`${dims} bg-[#064e3b] text-white p-1.5 flex items-center justify-center border-2 border-emerald-400 shadow-sm shrink-0 rounded-sm`}>
         <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-white">
           {/* Shield Outline */}
           <path d="M50 5 L90 20 V55 C90 75 50 95 50 95 C50 95 10 75 10 55 V20 Z" fill="#006600" stroke="#ffffff" strokeWidth="4" />
@@ -14,14 +14,16 @@ const Logo = ({ size = 'md', light = false }) => {
         </svg>
       </div>
 
-      <div className="flex flex-col justify-center">
-        <div className={`font-black tracking-wider uppercase text-base sm:text-lg ${light ? 'text-white' : 'text-slate-900'} leading-none`}>
-          CIVIC<span className="text-emerald-600 font-bold">PAK</span>
+      {!iconOnly && (
+        <div className="flex flex-col justify-center">
+          <div className={`font-black tracking-wider uppercase text-base sm:text-lg ${light ? 'text-white' : 'text-slate-900'} leading-none`}>
+            CIVIC<span className="text-emerald-600 font-bold">PAK</span>
+          </div>
+          <div className={`text-[10px] tracking-widest uppercase font-semibold ${light ? 'text-emerald-200' : 'text-emerald-700'} mt-1`}>
+            Govt. Grievance Portal
+          </div>
         </div>
-        <div className={`text-[10px] tracking-widest uppercase font-semibold ${light ? 'text-emerald-200' : 'text-emerald-700'} mt-1`}>
-          Govt. Grievance Portal
-        </div>
-      </div>
+      )}
     </div>
   );
 };

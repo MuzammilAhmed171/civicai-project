@@ -62,10 +62,10 @@ const CitizenDashboard = () => {
   };
 
   const priorityColors = {
-    Critical: 'bg-rose-100 text-rose-800 border-rose-400 font-bold',
-    High: 'bg-amber-100 text-amber-800 border-amber-400 font-semibold',
-    Medium: 'bg-[#064e3b]/10 text-[#064e3b] border-emerald-400',
-    Low: 'bg-slate-100 text-slate-700 border-slate-300'
+    Critical: 'bg-rose-600 text-white font-extrabold border border-rose-400 shadow-sm',
+    High: 'bg-amber-500 text-white font-bold border border-amber-300 shadow-sm',
+    Medium: 'bg-amber-100 text-amber-950 font-bold border border-amber-300',
+    Low: 'bg-emerald-100 text-emerald-950 font-bold border border-emerald-300'
   };
 
   return (
@@ -185,10 +185,10 @@ const CitizenDashboard = () => {
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <span className={`px-2.5 py-0.5 text-[11px] border uppercase ${priorityColors[c.priority] || priorityColors.Medium}`}>
-                          Priority: {c.priority}
+                        <span className={`px-2.5 py-0.5 text-[11px] uppercase ${priorityColors[c.priority] || priorityColors.Medium}`}>
+                          PRIORITY: {c.priority}
                         </span>
-                        <span className="text-[11px] text-slate-500 font-mono">
+                        <span className="text-[11px] text-slate-500 font-mono font-bold">
                           {new Date(c.createdAt || c.date).toLocaleDateString()}
                         </span>
                       </div>
@@ -197,7 +197,7 @@ const CitizenDashboard = () => {
                     {/* Photo + Description Grid */}
                     <div className="grid md:grid-cols-12 gap-4 items-start">
                       {c.imageUrl && (
-                        <div className="md:col-span-4 h-40 border-2 border-slate-300 overflow-hidden bg-slate-900 flex items-center justify-center">
+                        <div className="md:col-span-4 h-40 border-2 border-slate-300 overflow-hidden bg-slate-100 flex items-center justify-center">
                           <img src={c.imageUrl} alt="Grievance Evidence" className="max-h-full max-w-full object-contain" />
                         </div>
                       )}
@@ -236,20 +236,22 @@ const CitizenDashboard = () => {
                       </div>
                     </div>
 
-                    {/* Department & Remarks */}
-                    <div className="bg-slate-900 text-white p-3.5 space-y-2 border-t-2 border-emerald-500">
-                      <div className="flex items-center justify-between text-xs border-b border-slate-800 pb-2">
-                        <span className="text-slate-400 flex items-center gap-1.5 font-bold uppercase text-[11px]">
-                          <Building2 size={13} className="text-emerald-400" /> Assigned Body:
+                    {/* Department & Remarks (CLEAN MUNICIPAL EXECUTIVE LIGHT THEME) */}
+                    <div className="bg-emerald-50/60 p-4 space-y-2 border-2 border-[#064e3b]">
+                      <div className="flex items-center justify-between text-xs border-b border-emerald-200 pb-2">
+                        <span className="text-[#064e3b] font-mono flex items-center gap-1.5 font-black uppercase text-[11px]">
+                          <Building2 size={15} className="text-[#064e3b]" /> Assigned Body:
                         </span>
-                        <span className="font-bold text-white">{c.assignedDepartment || 'General Administration'}</span>
+                        <span className="font-extrabold text-slate-900 uppercase bg-white px-2.5 py-0.5 border border-emerald-300">
+                          {c.assignedDepartment || 'General Administration'}
+                        </span>
                       </div>
 
                       <div>
-                        <div className="text-[10px] text-emerald-400 flex items-center gap-1.5 mb-1 font-bold uppercase">
-                          <MessageSquare size={12} /> Official Officer Remarks:
+                        <div className="text-[11px] text-[#064e3b] flex items-center gap-1.5 mb-1 font-extrabold uppercase">
+                          <MessageSquare size={13} /> Official Officer Remarks:
                         </div>
-                        <p className="text-xs text-slate-200 font-mono bg-slate-950 p-2 border border-slate-800">
+                        <p className="text-xs text-slate-900 font-mono bg-white p-2.5 border border-slate-300 font-medium">
                           {c.resolutionNotes || 'Grievance logged. Inspection pending.'}
                         </p>
                       </div>

@@ -41,45 +41,23 @@ const AdminDashboard = () => {
   }
 
   const summary = analytics || {};
-  const total = summary.total !== undefined ? summary.total : 66;
-  const open = summary.open !== undefined ? summary.open : 14;
-  const assigned = summary.assigned !== undefined ? summary.assigned : 12;
-  const inProgress = summary.in_progress !== undefined ? summary.in_progress : 18;
-  const resolved = summary.resolved !== undefined ? summary.resolved : 22;
-  const critical = summary.critical !== undefined ? summary.critical : 8;
-  const duplicates = summary.duplicates !== undefined ? summary.duplicates : 1;
+  const total = summary.total || 0;
+  const open = summary.open || 0;
+  const assigned = summary.assigned || 0;
+  const inProgress = summary.in_progress || 0;
+  const resolved = summary.resolved || 0;
+  const critical = summary.critical || 0;
+  const duplicates = summary.duplicates || 0;
 
-  const rawCat = summary.by_category || summary.byCategory || [];
-  const byCategory = rawCat.length > 0 ? rawCat : [
-    { name: 'Road', count: 18 },
-    { name: 'Water', count: 24 },
-    { name: 'Waste', count: 12 },
-    { name: 'Electricity', count: 10 },
-    { name: 'Drainage', count: 8 },
-    { name: 'Safety', count: 6 }
-  ];
-
-  const rawCity = summary.by_city || [];
-  const byCity = rawCity.length > 0 ? rawCity : [
-    { name: 'Karachi', count: 28 },
-    { name: 'Lahore', count: 18 },
-    { name: 'Islamabad', count: 12 },
-    { name: 'Peshawar', count: 8 }
-  ];
-
-  const rawPri = summary.by_priority || summary.byPriority || [];
-  const byPriority = rawPri.length > 0 ? rawPri : [
-    { name: 'Critical', count: 8 },
-    { name: 'High', count: 22 },
-    { name: 'Medium', count: 24 },
-    { name: 'Low', count: 12 }
-  ];
+  const byCategory = summary.by_category || summary.byCategory || [];
+  const byCity = summary.by_city || [];
+  const byPriority = summary.by_priority || summary.byPriority || [];
 
   const insights = summary.insights || {
-    most_common_category: 'Water',
-    most_common_city: 'Karachi',
-    highest_priority_category: 'Water',
-    resolution_rate: '79.0%'
+    most_common_category: 'N/A',
+    most_common_city: 'N/A',
+    highest_priority_category: 'N/A',
+    resolution_rate: '0.0%'
   };
 
   const statCards = [

@@ -2,8 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  border-radius: 0px !important;
+/* Sharp corners default for container components while preserving rounded utilities for spinners & badges */
+button, input, select, textarea, table, .sharp-card {
+  border-radius: 0px;
+}
+
+.rounded-full {
+  border-radius: 9999px !important;
 }
 
 body {
@@ -110,5 +115,83 @@ body {
 
 @layer utilities {
   .animate-fade-in { animation: fadeIn 0.25s ease-out; }
+  .animate-modal-pop { animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(0.92) translateY(12px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+}
+
+/* Stack Card Bunch Styles */
+.stack-card-layer-1 {
+  transform: translate(6px, 6px) rotate(1deg);
+}
+
+.stack-card-layer-2 {
+  transform: translate(12px, 12px) rotate(2deg);
+}
+
+.stack-card-container:hover .stack-card-layer-1 {
+  transform: translate(10px, 10px) rotate(2.5deg);
+}
+
+.stack-card-container:hover .stack-card-layer-2 {
+  transform: translate(18px, 18px) rotate(4.5deg);
+}
+
+/* Official Clean Print Stylesheet */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide non-printable UI elements */
+  nav,
+  aside,
+  header,
+  footer,
+  .print\:hidden,
+  button,
+  input,
+  select,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Expand print containers to full A4 page width */
+  .print-area,
+  main,
+  #root {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Force table borders and clean typography */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 11px !important;
+    color: #000000 !important;
+  }
+
+  th, td {
+    border: 1px solid #64748b !important;
+    padding: 6px 10px !important;
+  }
+
+  th {
+    background-color: #064e3b !important;
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 }

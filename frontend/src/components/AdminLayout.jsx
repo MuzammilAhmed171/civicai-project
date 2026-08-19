@@ -1,11 +1,25 @@
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation, Outlet, Navigate } from 'react-router-dom';
-import { LayoutDashboard, FileSpreadsheet, BarChart3, ShieldCheck, LogOut, User, CopyCheck, FileText } from 'lucide-react';
+import { LayoutDashboard, FileSpreadsheet, BarChart3, ShieldCheck, LogOut, User, CopyCheck, FileText, AlertTriangle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Logo from './Logo';
 
 const AdminLayout = () => {
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const location = useLocation();
   const { user, isAdmin, isAuthenticated, logout } = useAuth();
+
+  useEffect(() => {
+    if (showLogoutModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showLogoutModal]);
 
   // Redirect if not authenticated as admin
   if (!isAuthenticated || !isAdmin) {
@@ -41,7 +55,7 @@ const AdminLayout = () => {
           </div>
 
           <button
-            onClick={logout}
+            onClick={() => setShowLogoutModal(true)}
             className="flex items-center gap-1.5 bg-rose-700 hover:bg-rose-800 text-white px-3.5 py-1.5 text-xs font-extrabold uppercase border border-rose-500 transition-all shadow-sm"
           >
             <LogOut size={15} /> Lock & Logout
@@ -90,6 +104,45 @@ const AdminLayout = () => {
           <Outlet />
         </main>
       </div>
+
+      {/* Admin Session Logout Confirmation Modal */}
+      {showLogoutModal && (
+        <div className="fixed top-0 left-0 right-0 bottom-0 inset-0 z-[9999] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white text-slate-900 border-4 border-[#064e3b] max-w-md w-full p-6 space-y-4 shadow-2xl animate-modal-pop">
+            <div className="flex items-center gap-3 border-b-2 border-slate-200 pb-3">
+              <div className="w-10 h-10 bg-rose-100 text-rose-700 flex items-center justify-center border border-rose-300 shrink-0">
+                <LogOut size={20} />
+              </div>
+              <div>
+                <h3 className="text-base font-black uppercase text-slate-900">Lock Executive Control Panel?</h3>
+                <p className="text-xs text-emerald-800 font-mono font-bold">Government Officer Session</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-700 font-medium leading-relaxed bg-slate-50 p-3 border border-slate-200">
+              Are you sure you want to end your active administrative session? You will be safely logged out of municipal control panel tools.
+            </p>
+
+            <div className="flex items-center justify-end gap-3 pt-2">
+              <button
+                onClick={() => setShowLogoutModal(false)}
+                className="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold uppercase px-4 py-2 border border-slate-400"
+              >
+                Cancel Session Lock
+              </button>
+              <button
+                onClick={() => {
+                  setShowLogoutModal(false);
+                  logout();
+                }}
+                className="bg-rose-700 hover:bg-rose-800 text-white text-xs font-extrabold uppercase px-5 py-2 border border-rose-500 shadow-sm"
+              >
+                Confirm & Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -23,50 +23,12 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
-  // Helper: Save user into local persistent registry
-  const saveToRegisteredUsers = (userObj) => {
-    try {
-      const existing = JSON.parse(localStorage.getItem('civicai_registered_users') || '[]');
-      const filtered = existing.filter(u => 
-        u.cnic !== userObj.cnic && 
-        u.email?.toLowerCase() !== userObj.email?.toLowerCase()
-      );
-      filtered.unshift(userObj);
-      localStorage.setItem('civicai_registered_users', JSON.stringify(filtered));
-    } catch (e) {
-      console.error('Failed to save to registered users:', e);
-    }
-  };
-
-  // Helper: Strictly find registered user by CNIC or Email
-  const findRegisteredUser = (identity) => {
-    try {
-      const existing = JSON.parse(localStorage.getItem('civicai_registered_users') || '[]');
-      const cleanIdent = String(identity || '').trim().toLowerCase();
-      const rawDigits = cleanIdent.replace(/\D/g, '');
-
-      return existing.find(u => {
-        const uCnic = String(u.cnic || '').toLowerCase();
-        const uCnicRaw = uCnic.replace(/\D/g, '');
-        const uEmail = String(u.email || '').toLowerCase();
-        return (
-          uCnic === cleanIdent ||
-          uEmail === cleanIdent ||
-          (rawDigits.length >= 10 && uCnicRaw === rawDigits)
-        );
-      });
-    } catch (e) {
-      return null;
-    }
-  };
-
   const saveSession = (authToken, userData) => {
     localStorage.setItem('civicai_token', authToken);
     localStorage.setItem('civicai_user', JSON.stringify(userData));
     api.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
     setToken(authToken);
     setUser(userData);
-    saveToRegisteredUsers(userData);
   };
 
   const fetchCurrentUser = async () => {
@@ -75,7 +37,6 @@ export const AuthProvider = ({ children }) => {
       if (res.data) {
         setUser(res.data);
         localStorage.setItem('civicai_user', JSON.stringify(res.data));
-        saveToRegisteredUsers(res.data);
       }
     } catch (e) {
       console.warn('Backend session verification fallback enabled:', e?.message);
@@ -110,24 +71,10 @@ export const AuthProvider = ({ children }) => {
       saveSession(authToken, userDataRes);
       return res.data;
     } catch (err) {
-      // If server responded with actual auth failure message (e.g. invalid password)
       if (err.response?.data?.error) {
         throw new Error(err.response.data.error);
       }
-
-      console.warn('Backend API offline, checking registered users database for:', identity);
-      
-      // STRICT LOOKUP: Only allow users that were ACTUALLY registered!
-      const localMatched = findRegisteredUser(identity);
-
-      if (localMatched) {
-        const mockToken = 'demo_token_' + Date.now();
-        saveSession(mockToken, localMatched);
-        return localMatched;
-      }
-
-      // STRICT REJECTION: Do NOT allow random unregistered data!
-      throw new Error('Invalid CNIC/Email or Password. No registered account found with these credentials. Please Register first.');
+      throw new Error(err.message || 'Invalid CNIC/Email or Password.');
     }
   };
 

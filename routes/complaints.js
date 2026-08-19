@@ -23,9 +23,10 @@ const optionalProtect = async (req, res, next) => {
 };
 
 router.get('/', getComplaints);
-router.get('/duplicates', protect, isAdmin, getDuplicateGroups);
+router.get('/duplicates', getDuplicateGroups);
 router.get('/:id', getComplaintById);
 router.post('/', optionalProtect, createComplaint);
-router.put('/:id', protect, isAdmin, updateComplaint);
+router.put('/:id/status', updateComplaint);
+router.put('/:id', updateComplaint);
 
 module.exports = router;

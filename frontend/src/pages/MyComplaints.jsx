@@ -28,8 +28,13 @@ const MyComplaints = () => {
       && (!filters.status || c.status === filters.status);
   });
 
-  const statusColors = { Open: 'bg-blue-100 text-blue-700', Assigned: 'bg-indigo-100 text-indigo-700', 'In Progress': 'bg-amber-100 text-amber-700', Resolved: 'bg-green-100 text-green-700', Closed: 'bg-gray-100 text-gray-700' };
-  const priorityColors = { Critical: 'text-red-600 bg-red-50', High: 'text-orange-600 bg-orange-50', Medium: 'text-amber-600 bg-amber-50', Low: 'text-green-600 bg-green-50' };
+  const statusColors = { Open: 'bg-blue-100 text-blue-800 font-bold border border-blue-300', Assigned: 'bg-indigo-100 text-indigo-800 font-bold border border-indigo-300', 'In Progress': 'bg-amber-100 text-amber-900 font-bold border border-amber-300', Resolved: 'bg-emerald-100 text-emerald-900 font-bold border border-emerald-300', Closed: 'bg-slate-100 text-slate-700 font-bold border border-slate-300' };
+  const priorityColors = {
+    Critical: 'bg-rose-600 text-white font-extrabold border border-rose-400 shadow-sm',
+    High: 'bg-amber-500 text-white font-bold border border-amber-300 shadow-sm',
+    Medium: 'bg-amber-100 text-amber-950 font-bold border border-amber-300',
+    Low: 'bg-emerald-100 text-emerald-950 font-bold border border-emerald-300'
+  };
   const categories = ['Road', 'Water', 'Waste', 'Electricity', 'Drainage', 'Safety', 'Other'];
   const priorities = ['Critical', 'High', 'Medium', 'Low'];
   const statuses = ['Open', 'Assigned', 'In Progress', 'Resolved', 'Closed'];
@@ -89,8 +94,8 @@ const MyComplaints = () => {
                     <span className="text-xs font-semibold px-2 py-0.5 bg-gray-100 text-gray-600 rounded">
                       CMP-{String(c._id).slice(-4).toUpperCase()}
                     </span>
-                    <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${priorityColors[c.priority] || priorityColors.Medium}`}>
-                      {c.priority}
+                    <span className={`px-2.5 py-0.5 text-[11px] uppercase ${priorityColors[c.priority] || priorityColors.Medium}`}>
+                      PRIORITY: {c.priority}
                     </span>
                   </div>
                   <p className="text-gray-800 font-medium mb-3 leading-relaxed">{c.description}</p>

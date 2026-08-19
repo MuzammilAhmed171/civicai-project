@@ -1,18 +1,36 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Home, FileText, User, LogOut, LogIn, UserPlus, Menu, X, ShieldAlert } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import Logo from './Logo';
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
   const { toast } = useToast();
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
+    setShowLogoutModal(true);
+  };
+
+  useEffect(() => {
+    if (showLogoutModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showLogoutModal]);
+
+  const confirmLogout = () => {
+    setShowLogoutModal(false);
     logout();
     toast.info('Logged out successfully from CivicAI Portal.');
     navigate('/');
@@ -70,7 +88,7 @@ const Navbar = () => {
                     <div className="text-[10px] text-emerald-300 font-mono">{user?.cnic || 'CNIC Logged'}</div>
                   </div>
                   <button
-                    onClick={handleLogout}
+                    onClick={handleLogoutClick}
                     title="Logout"
                     className="flex items-center gap-1.5 px-3 py-2 bg-rose-700 hover:bg-rose-800 text-white text-xs font-bold uppercase tracking-wider border border-rose-500 transition-all"
                   >
@@ -123,7 +141,7 @@ const Navbar = () => {
 
           <div className="pt-2 border-t border-emerald-700 space-y-2">
             {isAuthenticated ? (
-              <button onClick={() => { handleLogout(); setMobileOpen(false); }} className="flex items-center justify-center gap-2 bg-rose-700 text-white px-4 py-2.5 text-xs font-bold uppercase w-full border border-rose-500">
+              <button onClick={() => { setMobileOpen(false); handleLogoutClick(); }} className="flex items-center justify-center gap-2 bg-rose-700 text-white px-4 py-2.5 text-xs font-bold uppercase w-full border border-rose-500">
                 <LogOut size={18} /> Logout ({user?.name})
               </button>
             ) : (
@@ -138,6 +156,49 @@ const Navbar = () => {
             )}
           </div>
         </div>
+      )}
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutModal && createPortal(
+        <div
+          onClick={() => setShowLogoutModal(false)}
+          className="fixed top-0 left-0 w-screen h-screen inset-0 z-[99999] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 overflow-hidden"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white text-slate-900 border-4 border-[#064e3b] max-w-md w-full p-6 space-y-4 shadow-2xl animate-modal-pop relative"
+          >
+            <div className="flex items-center gap-3 border-b border-slate-200 pb-3">
+              <div className="w-10 h-10 bg-rose-100 text-rose-700 flex items-center justify-center border border-rose-300 shrink-0">
+                <LogOut size={20} />
+              </div>
+              <div>
+                <h3 className="text-base font-black uppercase text-slate-900">Confirm Citizen Logout</h3>
+                <p className="text-xs text-slate-500 font-semibold">CivicAI Public Grievance Portal</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-700 font-medium leading-relaxed bg-slate-50 p-3 border border-slate-200">
+              Are you sure you want to log out of your session? Unsaved form progress or drafts will be cleared.
+            </p>
+
+            <div className="flex items-center justify-end gap-3 pt-2">
+              <button
+                onClick={() => setShowLogoutModal(false)}
+                className="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold uppercase px-4 py-2 border border-slate-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmLogout}
+                className="bg-rose-700 hover:bg-rose-800 text-white text-xs font-extrabold uppercase px-5 py-2 border border-rose-500 shadow-sm"
+              >
+                Yes, Log Out
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
       )}
     </nav>
   );

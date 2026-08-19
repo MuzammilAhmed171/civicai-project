@@ -137,9 +137,10 @@ const loginUser = async (req, res) => {
 // Protected Admin Login
 const adminLogin = async (req, res) => {
   try {
-    const { username, password, key } = req.body;
+    const usernameInput = (req.body.username || req.body.identity || '').toLowerCase().trim();
+    const passwordInput = (req.body.password || '').trim();
 
-    const isAdminPass = (username === 'admin@civicai.gov' || username === 'admin') && password === 'admin123';
+    const isAdminPass = (usernameInput === 'admin@civicai.gov' || usernameInput === 'admin') && passwordInput === 'admin123';
     let adminUser = await User.findOne({ email: 'admin@civicai.gov' });
 
     if (isAdminPass) {
@@ -163,8 +164,8 @@ const adminLogin = async (req, res) => {
       });
     }
 
-    const dbUser = await User.findOne({ email: username, role: 'admin' });
-    if (dbUser && (await dbUser.matchPassword(password))) {
+    const dbUser = await User.findOne({ email: usernameInput, role: 'admin' });
+    if (dbUser && (await dbUser.matchPassword(passwordInput))) {
       return res.json({
         _id: dbUser._id,
         name: dbUser.name,

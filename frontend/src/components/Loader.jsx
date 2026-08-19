@@ -8,8 +8,8 @@ export const GlobalLoader = ({ message = "Syncing with CivicAI Database..." }) =
         {/* Glowing Spinning Ring */}
         <div className="absolute w-24 h-24 rounded-full border-4 border-emerald-500/20 border-t-emerald-500 animate-spin glow-emerald" />
         <div className="absolute w-16 h-16 rounded-full border-4 border-emerald-400/30 border-b-emerald-400 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
-        <div className="p-3 bg-slate-900 rounded-full shadow-xl">
-          <Logo className="w-10 h-10" textClassName="hidden" />
+        <div className="p-3 bg-slate-900 rounded-full shadow-xl flex items-center justify-center">
+          <Logo size="md" iconOnly={true} />
         </div>
       </div>
       
@@ -95,6 +95,26 @@ export const SkeletonGrid = ({ count = 4 }) => {
               <div className="h-6 w-28 skeleton-shimmer rounded" />
               <div className="h-8 w-20 skeleton-shimmer rounded" />
             </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export const SkeletonStackGrid = ({ count = 6 }) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-2 w-full">
+      {Array.from({ length: count }).map((_, idx) => (
+        <div key={idx} className="relative">
+          <div className="absolute -bottom-3 left-3 right-3 h-full bg-slate-200 border-2 border-slate-300 -z-20" />
+          <div className="absolute -bottom-1.5 left-1.5 right-1.5 h-full bg-slate-300 border-2 border-slate-400 -z-10" />
+          <div className="bg-white border-2 border-slate-300 p-4 space-y-3 relative z-10">
+            <div className="bg-[#064e3b]/30 h-9 w-full skeleton-shimmer" />
+            <div className="h-7 w-full skeleton-shimmer" />
+            <div className="h-16 w-full skeleton-shimmer" />
+            <div className="h-10 w-full skeleton-shimmer" />
+            <div className="h-8 w-full skeleton-shimmer" />
           </div>
         </div>
       ))}
