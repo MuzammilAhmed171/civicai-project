@@ -141,26 +141,33 @@ const adminLogin = async (req, res) => {
     const passwordInput = (req.body.password || '').trim();
 
     const isAdminPass = (usernameInput === 'admin@civicai.gov' || usernameInput === 'admin') && passwordInput === 'admin123';
-    let adminUser = await User.findOne({ email: 'admin@civicai.gov' });
 
     if (isAdminPass) {
-      if (!adminUser) {
-        adminUser = await User.create({
-          name: 'Chief Municipal Inspector',
-          cnic: '00000-0000000-0',
-          email: 'admin@civicai.gov',
-          phone: '+92-300-0000000',
-          city: 'Islamabad Capital Territory',
-          password: 'admin123',
-          role: 'admin'
-        });
+      let adminUser;
+      try {
+        adminUser = await User.findOne({ email: 'admin@civicai.gov' });
+        if (!adminUser) {
+          adminUser = await User.create({
+            name: 'Chief Municipal Inspector',
+            cnic: '00000-0000000-0',
+            email: 'admin@civicai.gov',
+            phone: '+92-300-0000000',
+            city: 'Islamabad Capital Territory',
+            password: 'admin123',
+            role: 'admin'
+          });
+        }
+      } catch (e) {
+        console.warn('Admin DB Query fallback active:', e.message);
       }
+
+      const adminId = adminUser ? adminUser._id : 'admin_chief_inspector_1';
       return res.json({
-        _id: adminUser._id,
-        name: adminUser.name,
-        email: adminUser.email,
+        _id: adminId,
+        name: adminUser ? adminUser.name : 'Chief Municipal Inspector',
+        email: 'admin@civicai.gov',
         role: 'admin',
-        token: generateToken(adminUser._id)
+        token: generateToken(adminId)
       });
     }
 
