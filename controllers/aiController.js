@@ -96,6 +96,11 @@ const analyzeComplaintWithGeminiVision = async (description = '', imageUrl = '')
         });
       });
 
+      req.setTimeout(3500, () => {
+        req.destroy();
+        resolve(fallbackAiPrediction(description, imageUrl));
+      });
+
       req.on('error', () => resolve(fallbackAiPrediction(description, imageUrl)));
       req.write(payload);
       req.end();
